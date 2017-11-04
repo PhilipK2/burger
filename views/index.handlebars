@@ -1,38 +1,61 @@
-<h1>Cats!</h1>
+<div class="container">
 
-<h2>Uneaten Burgers</h2>
+	<div class="row">
+		<div class="col-md-12" id="logo">
+			<h1 class="text-center">Big Phil's Burger Bar</h1>
+      <img src="/assets/img/1.png" alt="burger" class="img-responsive center-block">
+       <br>
+		</div>
+	</div>
+  	<!-- end first row -->
+  <br>
+	<div class="row">
+		<div class="col-md-4 col-md-offset-1" id="uneaten">
+			<h2 class="text-center">Uneaten Burgers</h2>
+			<ul>
+				{{#each burgers}}
+					{{#unless this.devoured}}
+						<li>
+							<h4>{{this.id}}. {{this.burger_name}}
+                <!-- this below is what makes the function from the controller actually display-->
+								<form action='burgers/updateOne/{{this.id}}?_method=PUT' method='POST'>
+									<input type='hidden' name='devoured' value='true'>
+									<button type='submit' class="btn btn-sm btn-danger">EAT ME!</button>
+								</form>
+							</h4>
+						</li>
+					{{/unless}}
+				{{/each}}
+			</ul>
+		</div>
 
-<ul>
-  {{#each burgers}}
-    {{#unless devoured}}
-      {{> cats/cat-block sleep=true}}
-    {{/unless}}
-  {{/each}}
-</ul>
-
-<h2>Eaten burgers</h2>
-
-<ul>
-  {{#each burgers}}
-    {{#if devoured}}
-      {{> cats/cat-block sleep=false}}
-    {{/if}}
-  {{/each}}
-</ul>
-
-<h2>Add a Burger</h2>
-<form class="create-form">
-
-  <div class="form-group">
-    <label for="ca">Burger Name:</label>
-    <input type="text" id="ca" name="name">
+		<div class="col-md-4 col-md-offset-2" id="eaten">
+			<h2 class="text-center">Eaten Burgers</h2>
+			<ul>
+				{{#each burgers}}
+					{{#if this.devoured}}
+						<li>
+							<h4 class="text-muted">{{this.id}}. {{this.burger_name}}</h4>
+						</li>
+					{{/if}}
+				{{/each}}
+			</ul>
+		</div>
   </div>
-
-  <div class="form-group">
-    <label for="slee">Devoured?</label><br>
-    <input type="radio" name="sleepy" value="1" checked> Sleepy!<br>
-    <input type="radio" name="sleepy" value="0"> Awake
+	  <!-- end 2nd row -->
+	<br><br>
+	<div class="row" id="userOrder">
+		<div class="col-md-12 text-center">
+			<form class="create-update-form" action="burgers/insertOne" method="POST">
+        <div class="form-group col-md-4 col-md-offset-4">
+          <label for="comment">Enter a burger you would like to eat!</label>
+          <textarea class="form-control" rows="3" cols="3" name="name"></textarea>
+          <br>
+          <button class="btn btn-info" type="submit">Submit</button>
+        </div>
+			</form>
+		</div>
   </div>
-
-  <button type="submit">Add Burger</button>
-</form>
+	  <!-- end fourth row -->	
+</div>
+<!-- end bootstrap container -->
